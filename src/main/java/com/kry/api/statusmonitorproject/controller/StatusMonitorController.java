@@ -62,4 +62,20 @@ public class StatusMonitorController {
         }
         return ResponseEntity.ok(foundService.get());
     }
+
+    @DeleteMapping("/{id}/{name}")
+    public ResponseEntity deleteService(@PathVariable Integer id, @PathVariable String name)
+    {
+        Optional<User> foundUser = userRepository.findById(id);
+        if (!foundUser.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User Not Found.");
+        }
+        Optional<Status> foundService = foundUser.get().getStatuses().stream().filter(status -> status.getName().equals(name)).findFirst();
+        if (!foundService.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Service Not Found.");
+        }
+        foundUser.get().getStatuses().remove(foundService.get());
+        userRepository.save(foundUser.get());
+        return ResponseEntity.ok("Service Deleted.");
+    }
 }
