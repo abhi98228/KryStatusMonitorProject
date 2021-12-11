@@ -1,6 +1,12 @@
 # KryStatusMonitorProject
 
-Database Used :- MongoDB
+Database Used :- MongoDB (no user id or password is needed)
+
+Database host=localhost
+
+Database port=27017
+
+Database name=KryServiceStatus
 
 Build :- Maven
 
