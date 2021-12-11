@@ -13,6 +13,7 @@ Steps to run the project :-
     mvn spring-boot:run 
     
 REST Endpoints for testing :- 
+
 "id" is integer value and "name" is string value.
 
 1. GET http://localhost:9090/statusMonitorService/{{id}} :- "id" is user id for which you need to see the status of all the added services. 
