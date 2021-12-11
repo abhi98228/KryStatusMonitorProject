@@ -5,8 +5,10 @@ Build :- Maven
 
 Steps to run the project :- 
 1. Port for the application = 9090
-2. To run the project either import project in your preffered IDE or run following commands : -
+2. To run the project either import project in your preffered IDE or run following commands :-
+    
     mvn install / mvn clean install
+    
     mvn spring-boot:run 
     
 REST Endpoints for testing :- 
