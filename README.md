@@ -17,7 +17,8 @@ REST Endpoints for testing :-
 "id" is integer value and "name" is string value.
 
 1. GET http://localhost:9090/statusMonitorService/{{id}} :- "id" is user id for which you need to see the status of all the added services. 
-Response e.g. :- 
+
+ e.g. Response:- 
 ```
 [
     {
@@ -54,16 +55,18 @@ Response e.g. :-
  ```
  
 2. POST http://localhost:9090/statusMonitorService/{{id}}/addurl :- "id" is the user id for which you need to add a service for monitoring. 
-   e.g. body:- 
-   ```
-   {
+  
+  e.g. body:- 
+```
+{
         "url": "http://localhost:8080",
         "name": "service1"
-   }
-   ```
+}
+```
   
 3. GET http://localhost:9090/statusMonitorService/{{id}}/{{name}} :- "id" is user id and "name" is the service name for which you need to check the status. 
-Response e.g. :- 
+
+ e.g. Response:- 
  ```
    {
         "url": "http://localhost:8080",
@@ -81,6 +84,7 @@ Response e.g. :-
         ]
     }
  ```
+
 4. DELETE http://localhost:9090/statusMonitorService/{{id}}/{{name}} :-  "id" is user id and "name" is the service name which you want to delete for the provided user id.
 
 5. The application updates the status for all the services added by all the users for every 5000 milliseconds. This value can be updated in StatusMonitorScheduler.java.
