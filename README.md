@@ -22,10 +22,10 @@ REST Endpoints for testing :-
    e.g. body:- 
    ```javascript
    {
-    "url": "http://localhost:8080",
-    "name": "service1"
-  }
-  ```
+        "url": "http://localhost:8080",
+        "name": "service1"
+   }
+  
   
 3. GET http://localhost:9090/statusMonitorService/{{id}}/{{name}} :- "id" is user id and "name" is the service name for which you need to check the status. 
 
