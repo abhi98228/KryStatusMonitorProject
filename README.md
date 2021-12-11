@@ -1,4 +1,5 @@
 # KryStatusMonitorProject
+The services which are to be monitored need to have actuator dependency.
 
 Database Used :- MongoDB (no user id or password is needed)
 
