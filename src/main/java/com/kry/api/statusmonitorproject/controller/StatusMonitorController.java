@@ -1,17 +1,14 @@
 package com.kry.api.statusmonitorproject.controller;
 
-import com.kry.api.statusmonitorproject.model.Health;
 import com.kry.api.statusmonitorproject.model.Status;
 import com.kry.api.statusmonitorproject.model.User;
 import com.kry.api.statusmonitorproject.repository.UserRepository;
+import com.kry.api.statusmonitorproject.service.StatusMonitorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestClientException;
-import org.springframework.web.client.RestTemplate;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +18,8 @@ import java.util.Optional;
 public class StatusMonitorController {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private StatusMonitorService statusMonitorService;
 
     @PostMapping("/{id}/addurl")
     public ResponseEntity addService(@PathVariable Integer id, @RequestBody Status status) {
@@ -28,17 +27,7 @@ public class StatusMonitorController {
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Status name should not be empty.");
         if (status.getUrl().isBlank())
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Status url should not be empty.");
-        RestTemplate restTemplate = new RestTemplate();
-        Health health = null;
-        try {
-            ResponseEntity<String> response
-                    = restTemplate.getForEntity(status.getUrl() + "/actuator/health", String.class);
-            if (response.getBody().contains("UP"))
-                health = new Health("UP", Instant.now());
-        } catch (RestClientException e) {
-            health = new Health("DOWN", Instant.now());
-        }
-        status.getHealthList().add(health);
+        statusMonitorService.updateStatusHealth(status);
         Optional<User> foundUser = userRepository.findById(id);
         if (!foundUser.isPresent()) {
             List<Status> statusList = new ArrayList<>();
