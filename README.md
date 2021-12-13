@@ -83,7 +83,15 @@ REST Endpoints for testing :-
  
 2. POST http://localhost:9090/statusMonitorService/{{id}}/addurl :- "id" is the user id for which you need to add a service for monitoring. 
   
-  e.g. body:- 
+e.g. Request:- 
+```
+curl --request POST \
+  --url http://localhost:9090/statusMonitorService/1/addurl \
+  --header 'content-type: application/json' \
+  --data '{ "url": "http://localhost:8080",  "name": "service1"}'
+```
+
+e.g. body:- 
 ```
 {
     "url": "http://localhost:8080",
