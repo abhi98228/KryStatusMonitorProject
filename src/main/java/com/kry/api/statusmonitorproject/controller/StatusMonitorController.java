@@ -43,39 +43,38 @@ public class StatusMonitorController {
 
     @GetMapping("/healthreports/{id}")
     public ResponseEntity getHealthReports(@PathVariable Integer id) {
-        Optional<User> foundUser = userRepository.findById(id);
-        if (!foundUser.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User Not Found.");
-        }
-        return ResponseEntity.ok(foundUser.get().getStatuses());
+        return ResponseEntity.ok(validateAndFindUser(id).getStatuses());
     }
 
     @GetMapping("healthreport/{id}/{name}")
     public ResponseEntity getHealthReport(@PathVariable Integer id, @PathVariable String name) {
-        Optional<User> foundUser = userRepository.findById(id);
-        if (!foundUser.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User Not Found.");
-        }
-        Optional<Status> foundService = foundUser.get().getStatuses().stream().filter(status -> status.getName().equals(name)).findFirst();
-        if (!foundService.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Service Not Found.");
-        }
-        return ResponseEntity.ok(foundService.get());
+        return ResponseEntity.ok(validateAndFindUserAndStatus(id,name));
     }
 
     @DeleteMapping("deleteservice/{id}/{name}")
     public ResponseEntity deleteService(@PathVariable Integer id, @PathVariable String name)
     {
+        User foundUser = validateAndFindUser(id);
+        foundUser.getStatuses().remove(validateAndFindUserAndStatus(id,name));
+        userRepository.save(foundUser);
+        return ResponseEntity.ok("Service Deleted.");
+    }
+
+    private User validateAndFindUser(Integer id)
+    {
         Optional<User> foundUser = userRepository.findById(id);
         if (!foundUser.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User Not Found.");
+           throw new IllegalArgumentException("User Not Found.");
         }
-        Optional<Status> foundService = foundUser.get().getStatuses().stream().filter(status -> status.getName().equals(name)).findFirst();
+        return foundUser.get();
+    }
+
+    private Status validateAndFindUserAndStatus(Integer id, String name)
+    {
+        Optional<Status> foundService = validateAndFindUser(id).getStatuses().stream().filter(status -> status.getName().equals(name)).findFirst();
         if (!foundService.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Service Not Found.");
+            throw new IllegalArgumentException("Service Not Found.");
         }
-        foundUser.get().getStatuses().remove(foundService.get());
-        userRepository.save(foundUser.get());
-        return ResponseEntity.ok("Service Deleted.");
+        return foundService.get();
     }
 }
