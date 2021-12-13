@@ -52,6 +52,12 @@ Database name=KryServiceStatus
 
 1. ```GET http://localhost:9090/statusMonitorService/healthreports/{id}``` :- "id" is user id for which you need to see
    the status of all the added services.
+   
+e.g. Request:-
+```bash
+curl -X GET \
+  http://localhost:9090/statusMonitorService/healthreport/1 \
+```
 
 e.g. Response:-
 
@@ -113,6 +119,12 @@ e.g. body:-
 
 3. ```GET http://localhost:9090/statusMonitorService/healthreport/{id}/{name}``` :- "id" is user id and "name" is the
    service name for which you need to check the status.
+   
+e.g. Request:-
+```bash
+curl -X GET \
+  http://localhost:9090/statusMonitorService/healthreport/1/service \
+```
 
 e.g. Response:-
 
@@ -136,6 +148,12 @@ e.g. Response:-
 
 4. ```DELETE http://localhost:9090/statusMonitorService/deleteservice/{id}/{name}``` :-  "id" is user id and "name" is
    the service name which you want to delete for the provided user id.
+   
+e.g. Request:-
+```bash
+curl -X DELETE \
+  http://localhost:9090/statusMonitorService/healthreport/1/service \
+```
 
 5. The application updates the status for all the services added by all the users for every 5000 milliseconds. This
    value can be updated in StatusMonitorScheduler.java.
