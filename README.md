@@ -1,5 +1,5 @@
 # KryStatusMonitorProject
-The services which are to be monitored need to have actuator dependency. 
+The project is built using Maven. The services which are to be monitored need to have actuator dependency. 
 KryStatusMonitorProject calls "```/actuator/health```" endpoint for each of these services to check their status.
 
 To add the actuator to a Maven-based project, add the following ‘Starter’ dependency:
@@ -30,7 +30,6 @@ Database port=27017
 Database name=KryServiceStatus
 
 
-Build :- Maven
 
 ## Steps to run the project
 
