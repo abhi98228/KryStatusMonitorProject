@@ -99,7 +99,7 @@ e.g. Request:-
 curl -X POST \
   http://localhost:9090/statusMonitorService/addservice/1 \
   -H 'content-type: application/json' \
-  -d '{ "url": "http://localhost:8084",  "name": "service4"}'
+  -d '{ "url": "http://localhost:8080",  "name": "service"}'
 ```
 
 e.g. body:-
@@ -107,7 +107,7 @@ e.g. body:-
 ```json
 {
     "url": "http://localhost:8080",
-    "name": "service1"
+    "name": "service"
 }
 ```
 
