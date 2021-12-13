@@ -42,7 +42,7 @@ public class StatusMonitorController {
     }
 
     @GetMapping("/healthreports/{id}")
-    public ResponseEntity getHealthReport(@PathVariable Integer id) {
+    public ResponseEntity getHealthReports(@PathVariable Integer id) {
         Optional<User> foundUser = userRepository.findById(id);
         if (!foundUser.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User Not Found.");
