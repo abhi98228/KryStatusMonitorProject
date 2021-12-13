@@ -21,7 +21,7 @@ public class StatusMonitorController {
     @Autowired
     private StatusMonitorService statusMonitorService;
 
-    @PostMapping("/{id}/addurl")
+    @PostMapping("/addservice/{id}/")
     public ResponseEntity addService(@PathVariable Integer id, @RequestBody Status status) {
         if (status.getName().isBlank())
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Status name should not be empty.");
@@ -41,7 +41,7 @@ public class StatusMonitorController {
         return ResponseEntity.ok("User Modified");
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/healthreports/{id}")
     public ResponseEntity getHealthReport(@PathVariable Integer id) {
         Optional<User> foundUser = userRepository.findById(id);
         if (!foundUser.isPresent()) {
@@ -50,7 +50,7 @@ public class StatusMonitorController {
         return ResponseEntity.ok(foundUser.get().getStatuses());
     }
 
-    @GetMapping("/{id}/{name}")
+    @GetMapping("healthreport/{id}/{name}")
     public ResponseEntity getHealthReport(@PathVariable Integer id, @PathVariable String name) {
         Optional<User> foundUser = userRepository.findById(id);
         if (!foundUser.isPresent()) {
@@ -63,7 +63,7 @@ public class StatusMonitorController {
         return ResponseEntity.ok(foundService.get());
     }
 
-    @DeleteMapping("/{id}/{name}")
+    @DeleteMapping("deleteservice/{id}/{name}")
     public ResponseEntity deleteService(@PathVariable Integer id, @PathVariable String name)
     {
         Optional<User> foundUser = userRepository.findById(id);
