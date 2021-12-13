@@ -55,7 +55,7 @@ public class StatusMonitorController {
     public ResponseEntity deleteService(@PathVariable Integer id, @PathVariable String name)
     {
         User foundUser = validateAndFindUser(id);
-        foundUser.getStatuses().remove(validateAndFindUserAndStatus(id,name));
+        foundUser.getStatuses().remove(validateAndFindUserAndStatus(foundUser,name));
         userRepository.save(foundUser);
         return ResponseEntity.ok("Service Deleted.");
     }
@@ -72,6 +72,15 @@ public class StatusMonitorController {
     private Status validateAndFindUserAndStatus(Integer id, String name)
     {
         Optional<Status> foundService = validateAndFindUser(id).getStatuses().stream().filter(status -> status.getName().equals(name)).findFirst();
+        if (!foundService.isPresent()) {
+            throw new IllegalArgumentException("Service Not Found.");
+        }
+        return foundService.get();
+    }
+
+    private Status validateAndFindUserAndStatus(User user, String name)
+    {
+        Optional<Status> foundService = user.getStatuses().stream().filter(status -> status.getName().equals(name)).findFirst();
         if (!foundService.isPresent()) {
             throw new IllegalArgumentException("Service Not Found.");
         }
