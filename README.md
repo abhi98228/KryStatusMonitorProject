@@ -1,7 +1,27 @@
 # KryStatusMonitorProject
 The services which are to be monitored need to have actuator dependency.
 
+To add the actuator to a Maven-based project, add the following ‘Starter’ dependency:
+```
+<dependencies>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-actuator</artifactId>
+    </dependency>
+</dependencies>
+```
+
+For Gradle, use the following declaration:
+
+```
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+}
+```
+
 Database Used :- MongoDB (no user id or password is needed)
+
+Database details can be changed in application.properties:- 
 
 Database host=localhost
 
