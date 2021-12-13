@@ -2,7 +2,7 @@
 The services which are to be monitored need to have actuator dependency.
 
 To add the actuator to a Maven-based project, add the following ‘Starter’ dependency:
-```
+```xml
 <dependencies>
     <dependency>
         <groupId>org.springframework.boot</groupId>
@@ -13,7 +13,7 @@ To add the actuator to a Maven-based project, add the following ‘Starter’ de
 
 For Gradle, use the following declaration:
 
-```
+```gradle
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
 }
@@ -46,7 +46,7 @@ REST Endpoints for testing :-
 1. GET http://localhost:9090/statusMonitorService/{{id}} :- "id" is user id for which you need to see the status of all the added services. 
 
  e.g. Response:- 
-```
+```json
 [
     {
         "url": "http://localhost:8080",
@@ -84,7 +84,7 @@ REST Endpoints for testing :-
 2. POST http://localhost:9090/statusMonitorService/{{id}}/addurl :- "id" is the user id for which you need to add a service for monitoring. 
   
 e.g. Request:- 
-```
+```curl
 curl --request POST \
   --url http://localhost:9090/statusMonitorService/1/addurl \
   --header 'content-type: application/json' \
@@ -92,7 +92,7 @@ curl --request POST \
 ```
 
 e.g. body:- 
-```
+```json
 {
     "url": "http://localhost:8080",
     "name": "service1"
@@ -102,7 +102,7 @@ e.g. body:-
 3. GET http://localhost:9090/statusMonitorService/{{id}}/{{name}} :- "id" is user id and "name" is the service name for which you need to check the status. 
 
  e.g. Response:- 
- ```
+ ```json
    {
         "url": "http://localhost:8080",
         "name": "service1",
