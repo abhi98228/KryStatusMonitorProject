@@ -1,0 +1,14 @@
+server:
+    port: 9090
+spring:
+    data:
+        mongodb:
+            database: KryServiceStatus
+            host: localhost
+            port: 27017
+    jpa:
+        properties:
+            hibernate:
+                ogm:
+                    datastore:
+                        create_database: true

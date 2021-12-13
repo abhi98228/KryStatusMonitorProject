@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class ExceptionHelper {
 
-    @ExceptionHandler(value = { IllegalArgumentException.class })
+    @ExceptionHandler(value = {IllegalArgumentException.class})
     public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException ex) {
         return new ResponseEntity<String>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }

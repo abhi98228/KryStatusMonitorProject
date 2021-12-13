@@ -4,8 +4,8 @@ import com.kry.api.statusmonitorproject.model.Status;
 import com.kry.api.statusmonitorproject.model.User;
 import com.kry.api.statusmonitorproject.repository.UserRepository;
 import com.kry.api.statusmonitorproject.service.StatusMonitorService;
+import com.kry.api.statusmonitorproject.service.ValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,13 +20,12 @@ public class StatusMonitorController {
     private UserRepository userRepository;
     @Autowired
     private StatusMonitorService statusMonitorService;
+    @Autowired
+    private ValidationService validationService;
 
-    @PostMapping("/addservice/{id}/")
+    @PostMapping("/addservice/{id}")
     public ResponseEntity addService(@PathVariable Integer id, @RequestBody Status status) {
-        if (status.getName().isBlank())
-            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Status name should not be empty.");
-        if (status.getUrl().isBlank())
-            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Status url should not be empty.");
+        validationService.validateStatus(status);
         statusMonitorService.updateStatusHealth(status);
         Optional<User> foundUser = userRepository.findById(id);
         if (!foundUser.isPresent()) {
@@ -43,43 +42,19 @@ public class StatusMonitorController {
 
     @GetMapping("/healthreports/{id}")
     public ResponseEntity getHealthReports(@PathVariable Integer id) {
-        return ResponseEntity.ok(validateAndFindUser(id).getStatuses());
+        return ResponseEntity.ok(validationService.validateAndFindUser(id).getStatuses());
     }
 
     @GetMapping("healthreport/{id}/{name}")
     public ResponseEntity getHealthReport(@PathVariable Integer id, @PathVariable String name) {
-        return ResponseEntity.ok(validateAndFindUserAndStatus(id,name));
+        return ResponseEntity.ok(validationService.validateAndFindUserAndStatus(id, name));
     }
 
     @DeleteMapping("deleteservice/{id}/{name}")
-    public ResponseEntity deleteService(@PathVariable Integer id, @PathVariable String name)
-    {
-        User foundUser = validateAndFindUser(id);
-        foundUser.getStatuses().remove(validateAndFindUserAndStatus(foundUser,name));
+    public ResponseEntity deleteService(@PathVariable Integer id, @PathVariable String name) {
+        User foundUser = validationService.validateAndFindUser(id);
+        foundUser.getStatuses().remove(validationService.validateAndFindUserAndStatus(foundUser, name));
         userRepository.save(foundUser);
         return ResponseEntity.ok("Service Deleted.");
-    }
-
-    private User validateAndFindUser(Integer id)
-    {
-        Optional<User> foundUser = userRepository.findById(id);
-        if (!foundUser.isPresent()) {
-           throw new IllegalArgumentException("User Not Found.");
-        }
-        return foundUser.get();
-    }
-
-    private Status validateAndFindUserAndStatus(Integer id, String name)
-    {
-        return validateAndFindUserAndStatus(validateAndFindUser(id),name);
-    }
-
-    private Status validateAndFindUserAndStatus(User user, String name)
-    {
-        Optional<Status> foundStatus = user.getStatuses().stream().filter(status -> status.getName().equals(name)).findFirst();
-        if (!foundStatus.isPresent()) {
-            throw new IllegalArgumentException("Service Not Found.");
-        }
-        return foundStatus.get();
     }
 }
