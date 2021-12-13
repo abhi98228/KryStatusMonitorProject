@@ -87,14 +87,14 @@ Database name=KryServiceStatus
 ]
  ```
  
-2. ```POST http://localhost:9090/statusMonitorService/addservice/{id}/``` :- "id" is the user id for which you need to add a service for monitoring. 
+2. ```POST http://localhost:9090/statusMonitorService/addservice/{id}``` :- "id" is the user id for which you need to add a service for monitoring. 
   
 e.g. Request:- 
 ```bash
-curl --request POST \
-  --url http://localhost:9090/statusMonitorService/addservice/1 \
-  --header 'content-type: application/json' \
-  --data '{ "url": "http://localhost:8080",  "name": "service1"}'
+curl -X POST \
+  http://localhost:9090/statusMonitorService/addservice/1 \
+  -H 'content-type: application/json' \
+  -d '{ "url": "http://localhost:8084",  "name": "service4"}'
 ```
 
 e.g. body:- 
