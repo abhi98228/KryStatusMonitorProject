@@ -87,7 +87,7 @@ Database name=KryServiceStatus
 ]
  ```
  
-2. ```POST http://localhost:9090/statusMonitorService/addservice/{id}/``` :- "id" is the user id for which you need to add a service for monitoring. 
+2. ```POST http://localhost:9090/statusMonitorService/addservice/{id}``` :- "id" is the user id for which you need to add a service for monitoring. 
   
 e.g. Request:- 
 ```bash
