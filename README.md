@@ -86,8 +86,8 @@ REST Endpoints for testing :-
   e.g. body:- 
 ```
 {
-        "url": "http://localhost:8080",
-        "name": "service1"
+    "url": "http://localhost:8080",
+    "name": "service1"
 }
 ```
   
