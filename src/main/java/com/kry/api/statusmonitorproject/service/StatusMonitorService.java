@@ -25,7 +25,7 @@ public class StatusMonitorService {
         userRepository.save(user);
     }
 
-    public void updateStatusHealth(Status status) {
+    private void updateStatusHealth(Status status) {
         Health health = null;
         try {
             ResponseEntity<String> response
