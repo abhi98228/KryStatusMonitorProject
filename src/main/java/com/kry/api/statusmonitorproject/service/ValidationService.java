@@ -4,6 +4,8 @@ import com.kry.api.statusmonitorproject.model.Status;
 import com.kry.api.statusmonitorproject.model.User;
 import com.kry.api.statusmonitorproject.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -12,6 +14,14 @@ import java.util.Optional;
 public class ValidationService {
     @Autowired
     private UserRepository userRepository;
+
+    public void validateDuplicateUrlOrServiceName(User user,Status status)
+    {
+        if(!user.getStatuses().contains(status))
+            user.getStatuses().add(status);
+        else
+            throw new IllegalArgumentException("There is a service with same name or url already present for the user.");
+    }
 
     public User validateAndFindUser(Integer id) {
         Optional<User> foundUser = userRepository.findById(id);

@@ -6,6 +6,7 @@ import com.kry.api.statusmonitorproject.repository.UserRepository;
 import com.kry.api.statusmonitorproject.service.StatusMonitorService;
 import com.kry.api.statusmonitorproject.service.ValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,7 +36,7 @@ public class StatusMonitorController {
             userRepository.save(user);
             return ResponseEntity.ok("User Added");
         }
-        foundUser.get().getStatuses().add(status);
+        validationService.validateDuplicateUrlOrServiceName(foundUser.get(),status);
         userRepository.save(foundUser.get());
         return ResponseEntity.ok("User Modified");
     }
