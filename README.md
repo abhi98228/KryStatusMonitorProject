@@ -91,10 +91,10 @@ Database name=KryServiceStatus
   
 e.g. Request:- 
 ```bash
-curl --request POST \
-  --url http://localhost:9090/statusMonitorService/addservice/1 \
-  --header 'content-type: application/json' \
-  --data '{ "url": "http://localhost:8080",  "name": "service1"}'
+curl -X POST \
+  http://localhost:9090/statusMonitorService/addservice/1 \
+  -H 'content-type: application/json' \
+  -d '{ "url": "http://localhost:8084",  "name": "service4"}'
 ```
 
 e.g. body:- 
