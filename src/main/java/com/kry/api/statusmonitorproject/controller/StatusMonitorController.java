@@ -71,19 +71,15 @@ public class StatusMonitorController {
 
     private Status validateAndFindUserAndStatus(Integer id, String name)
     {
-        Optional<Status> foundService = validateAndFindUser(id).getStatuses().stream().filter(status -> status.getName().equals(name)).findFirst();
-        if (!foundService.isPresent()) {
-            throw new IllegalArgumentException("Service Not Found.");
-        }
-        return foundService.get();
+        return validateAndFindUserAndStatus(validateAndFindUser(id),name);
     }
 
     private Status validateAndFindUserAndStatus(User user, String name)
     {
-        Optional<Status> foundService = user.getStatuses().stream().filter(status -> status.getName().equals(name)).findFirst();
-        if (!foundService.isPresent()) {
+        Optional<Status> foundStatus = user.getStatuses().stream().filter(status -> status.getName().equals(name)).findFirst();
+        if (!foundStatus.isPresent()) {
             throw new IllegalArgumentException("Service Not Found.");
         }
-        return foundService.get();
+        return foundStatus.get();
     }
 }
