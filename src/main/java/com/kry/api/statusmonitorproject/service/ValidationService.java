@@ -42,8 +42,8 @@ public class ValidationService {
 
     public void validateStatus(Status status) {
         if (status.getName().isBlank())
-            throw new IllegalArgumentException(("Status name should not be empty."));
+            throw new IllegalArgumentException("Status name should not be empty.");
         if (status.getUrl().isBlank())
-            throw new IllegalArgumentException(("Status url should not be empty."));
+            throw new IllegalArgumentException("Status url should not be empty.");
     }
 }
