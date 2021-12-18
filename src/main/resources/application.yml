@@ -1,17 +1,19 @@
 server:
-  port: 9090
+    port: 9090
 spring:
-  data:
-    mongodb:
-      database: KryServiceStatus
-      host: localhost
-      port: 27017
-      username: admin
-      password: password
-      authentication-database: admin
-  jpa:
-    properties:
-      hibernate:
-        ogm:
-          datastore:
-            create_database: true
+    data:
+        mongodb:
+            authentication-database: admin
+            database: KryServiceStatus
+            host: localhost
+            password: password
+            port: 27017
+            username: admin
+    jpa:
+        properties:
+            hibernate:
+                ogm:
+                    datastore:
+                        create_database: true
+update:
+    rate: 5000
